@@ -1,12 +1,12 @@
-# Jacobi Solver
+# Non-Central Chi Sqare
 
-<img src="http://appgallery.maxeler.com/v0.1/app/Jacobi%20Solver/icon" alt="Jacobi Solver">
+<img src="http://appgallery.maxeler.com/v0.1/app/Non-Central%20Chi%20Square/icon" alt="Non-Central Chi Sqare">
 
 ## Description
 
-This App implements a solver for equations of the type Ax=b, where A is constant but where we have a set of possible b. Both the matrix A and the vectors b are randomly generated. This App always runs both the DFE and the CPU implementation and compares respective times taken.
+This App generates lots of sample from complex distribution.
 
-####This App requires [maxpower](https://github.com/maxeler/maxpower) Maxeler standard library.####
+####This App requires maxjlibs Maxeler library.####
 
 ## Content
 
@@ -51,5 +51,5 @@ Removes results of compilation from build directories
 
 Removes all results of comakempilation from build directories, including all maxfiles
 
-Jacobi Solver on [AppGallery](http://appgallery.maxeler.com/)   
+Non-Central Chi Sqare on [AppGallery](http://appgallery.maxeler.com/)   
 
