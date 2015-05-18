@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<maxCompilerManager version="2">
+<enginePart internalEngineSubproject="Non-CentralChiSquare_EngineCode" isSrcBin="false" isUseDefaultSelected="false" outputLocation="/Non-CentralChiSquare_EngineCode/bin" projectName="Non-CentralChiSquare"/>
+<cpuPart internalCpuSubproject="Non-CentralChiSquare_CPUCode"/>
+<watchedFiles/>
+</maxCompilerManager>

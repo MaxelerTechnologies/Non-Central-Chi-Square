@@ -1,0 +1,39 @@
+package com.maxeler.applibrary.noncentralchisquare;
+
+import com.maxeler.maxcompiler.v2.build.EngineParameters;
+import com.maxeler.maxcompiler.v2.managers.BuildConfig;
+import com.maxeler.maxcompiler.v2.managers.BuildConfig.Effort;
+import com.maxeler.maxcompiler.v2.managers.BuildConfig.Level;
+
+
+/**
+ * Bitstream builder class.
+ * <p>
+ * Contains the {@code main} method to be called for building a simulation
+ * or hardware bitstream. The bitstream is built with the default engine
+ * parameters. They can be changed on the command line, or by passing the
+ * path to a file defining the engine parameters.
+ * @see NBodyParameters
+ * @see EngineParameters
+ */
+public class NonCentralChiSquareBuilder {
+
+	private static String s_kernelName = NonCentralChiSquareKernel.
+			class.getSimpleName();
+
+	public static void main(String[] args) {
+		NonCentralChiSquareEngineParameters params = new NonCentralChiSquareEngineParameters(args);
+		NonCentralChiSquareManager manager = new NonCentralChiSquareManager(params, s_kernelName);
+
+		BuildConfig buildConfig = new BuildConfig(Level.FULL_BUILD);
+		buildConfig.setBuildEffort(Effort.VERY_HIGH);
+		buildConfig.setEnableTimingAnalysis(true);
+		buildConfig.setMPPRCostTableSearchRange(params.getMPPRStartCT(), params.getMPPREndCT());
+		buildConfig.setMPPRParallelism(params.getMPPRThreads());
+		buildConfig.setMPPRRetryNearMissesThreshold(params.getMPPRRetryThreshold());
+
+
+		manager.setBuildConfig(buildConfig);
+		manager.build();
+	}
+}

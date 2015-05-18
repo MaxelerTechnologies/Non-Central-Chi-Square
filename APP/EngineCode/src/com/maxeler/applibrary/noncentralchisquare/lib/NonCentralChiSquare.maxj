@@ -1,0 +1,57 @@
+package com.maxeler.applibrary.noncentralchisquare.lib;
+
+import com.maxeler.maxcompiler.v2.kernelcompiler.KernelLib;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEFloat;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
+import com.maxeler.maxjlibs.rng.CentralChiSquare;
+import com.maxeler.maxjlibs.rng.GaussianRng;
+
+public class NonCentralChiSquare extends KernelLib {
+
+	private final DFEVar m_randomVar;
+
+	public NonCentralChiSquare(final KernelLib owner,
+			final int maximumDegree,
+			final DFEFloat type,
+			final DFEVar actualDegree,
+			final DFEVar sqrtLambda,
+			final int seed) {
+		super(owner);
+
+		final CentralChiSquare ccs = new CentralChiSquare(this,
+				"CentralChiSquare", type, maximumDegree,
+				actualDegree-1, seed);
+		final GaussianRng nonCentralityGaussian = new GaussianRng(this,
+				"NonCentralityGaussian", type, constant.var(0),
+				constant.var(1), seed);
+
+		final DFEVar decentralization = nonCentralityGaussian.getRandomVar() +
+				sqrtLambda;
+		m_randomVar = ccs.getRandomVar() + decentralization*decentralization;
+	}
+
+	public DFEVar getRandomVar() {
+		return m_randomVar;
+	}
+
+
+	public static class CpuCode {
+		private final CentralChiSquare.CpuCode ccs;
+		private final GaussianRng.CpuCode g;
+		private final double sqrtLambda;
+
+		public CpuCode(final int degree,
+				final double lambda,
+				final int seed) {
+
+			ccs = new CentralChiSquare.CpuCode(degree-1, seed);
+			g = new GaussianRng.CpuCode(0.0, 1.0, seed);
+			sqrtLambda = Math.sqrt(lambda);
+		}
+
+		public double get() {
+			double decentrality = g.get() + sqrtLambda;
+			return ccs.get() + decentrality*decentrality;
+		}
+	}
+}

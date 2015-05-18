@@ -1,0 +1,102 @@
+package com.maxeler.applibrary.noncentralchisquare.tests;
+
+import java.util.List;
+
+import com.maxeler.applibrary.noncentralchisquare.lib.NonCentralChiSquare;
+import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
+import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEFloat;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
+import com.maxeler.maxcompiler.v2.managers.standard.SimulationManager;
+
+public class NonCentralChiSquareTest {
+	private static final int MAXIMUM_DEGREE = 21;
+	private static final int SEED = 13;
+
+	private static final DFEFloat VALUE_TYPE = Kernel.dfeFloat(11, 53);
+
+	protected class NonCentralChiSquareKernel extends Kernel {
+		final DFEFloat type = dfeFloat(8, 24);
+
+
+		NonCentralChiSquareKernel(KernelParameters parameters) {
+			super(parameters);
+
+			final DFEVar degree = io.scalarInput("degree", dfeUInt(8));
+			final DFEVar sqrtLambda = io.scalarInput("sqrtLambda", VALUE_TYPE);
+
+			NonCentralChiSquare nccs = new NonCentralChiSquare(this,
+					MAXIMUM_DEGREE, VALUE_TYPE, degree, sqrtLambda,
+					SEED);
+
+			io.output("randomValues", nccs.getRandomVar(),
+					nccs.getRandomVar().getType());
+		}
+	}
+
+	public NonCentralChiSquareTest() {
+	}
+
+
+	public void test() {
+		final int degree = 8;
+		final double lambda = 1.0;
+		final int valueCount = 100;
+
+		NonCentralChiSquare.CpuCode cpuVersion =
+			new NonCentralChiSquare.CpuCode(degree, lambda, SEED);
+
+		SimulationManager m = new SimulationManager("NonCentralChiSquare");
+		Kernel kernel = new NonCentralChiSquareKernel(m.makeKernelParameters());
+		m.setKernel(kernel);
+
+		m.setScalarInput("degree", degree);
+		m.setScalarInput("sqrtLambda", Math.sqrt(lambda));
+
+		m.setKernelCycles(valueCount);
+		m.runTest();
+
+		List<Double> hwRands = m.getOutputData("randomValues");
+		double max_error = 0.0;
+		int i = 0;
+		int i_max = -1;
+		double sw_max = 0;
+		double hw_max = 0;
+		double hw_sum = 0;
+		double sw_sum = 0;
+		for(Double hw : hwRands) {
+			final double sw = cpuVersion.get();
+			hw_sum += hw;
+			sw_sum += sw;
+			// compute relative error for numbers large enough,
+			// otherwise take absolute error
+			double error = Math.abs(sw - hw);
+			if(Math.abs(sw) > 1e-10) {
+				error /= Math.abs(sw);
+			}
+			if(error > max_error) {
+				i_max  = i;
+				sw_max  = sw;
+				hw_max = hw;
+				max_error = error;
+			}
+			++i;
+			System.out.printf("SW: %g\tHW: %g\n", sw, hw);
+		}
+		System.out.printf("SW average: %g HW average: %g\n", sw_sum/valueCount, hw_sum/valueCount);
+		String msg = String.format("Max error %g on index %d. Expected %.20f but got %.20f", max_error, i_max, sw_max, hw_max);
+		System.out.println(msg);
+		if(max_error > 1e-10) {
+			throw new RuntimeException(msg);
+		}
+
+		System.out.println("TEST PASSED");
+	}
+
+
+
+	public static void main(String[] args) {
+		NonCentralChiSquareTest k = new NonCentralChiSquareTest();
+		k.test();
+	}
+}

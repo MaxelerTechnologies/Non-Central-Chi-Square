@@ -1,0 +1,31 @@
+package com.maxeler.applibrary.noncentralchisquare;
+
+import com.maxeler.applibrary.noncentralchisquare.lib.NonCentralChiSquare;
+import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
+import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEFloat;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
+
+public class NonCentralChiSquareKernel extends Kernel {
+
+	public NonCentralChiSquareKernel(KernelParameters kernelParams,
+			NonCentralChiSquareEngineParameters params) {
+		super(kernelParams);
+
+		final int RNG_SEED = 13;
+
+		final DFEFloat type = params.getValueType();
+
+		final DFEVar actualDegree = io.scalarInput("degree", dfeUInt(8));
+		final DFEVar sqrtLambda = io.scalarInput("sqrtLambda", type);
+
+		final NonCentralChiSquare nccs = new NonCentralChiSquare(this,
+				params.getMaximumDegree(),
+				type,
+				actualDegree,
+				sqrtLambda,
+				RNG_SEED);
+
+		io.output("randomValues", type) <== nccs.getRandomVar();
+	}
+}

@@ -1,0 +1,34 @@
+######################################################################
+# Non-Central Chi Square Random Number Generator                     #
+#                                                                    #
+# Author:  Sébastien Racanière                                       #
+#                                                                    #
+# Date:    26 Jun 2012                                               #
+#                                                                    #
+######################################################################
+
+package "ncchisquare - Non-Central Chi Square Random Number Generator"
+version "1.0"
+usage "ncchisquare [OPTIONS]"
+
+option "degree" g "Degree of the non-central chi square distribution."
+	short optional default="160"
+option "output-count" n "Number of pseudorandom values to be generated"
+	int optional default="100000"
+option "lambda" l "De-centralizing constant" double optional default="1.0"
+option "file-output" o "Path to output generated values in CSV format"
+	string optional typestr="FILE"
+
+defgroup "platform"
+groupoption "cpu" c "Run the simulation on the CPU only" group="platform"
+groupoption "dfe" d "Run the simulation on the DFE only" group="platform"
+
+text "\nExamples:
+	ncchisquare
+		run the application with default parameters
+
+	ncchisquare -d -g 100 -l 5.8 -n 50000000 -o vals.csv
+		run only the DFE version of the application for a distribution
+		of degree 100, lambda 5.8, generating 50 million values and
+		outputting them in CSV format to vals.csv
+"

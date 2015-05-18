@@ -1,0 +1,124 @@
+Sat 19:29: ########################################## 
+Sat 19:29: Compiling.
+Sat 19:29: ########################################## 
+
+Sat 19:29: MaxCompiler version: 2014.2.
+Sat 19:29: Build Vectis run rule for Non-CentralChiSquare start time: Sat May 16 19:29:27 BST 2015.
+Sat 19:29: Project location: /home/imilankovic/workspace/GIT/Non-CentralChiSquare.
+Sat 19:29: Detailed build log: /home/imilankovic/workspace/GIT/Non-CentralChiSquare/RunRules/Vectis/build.log.
+
+Sat 19:29: Compiling Engine Code.
+Sat 19:29: Building NCChiSquare.max file. 
+Sat 19:29: Setting environment variable:
+Sat 19:29: MAXCOMPILER_BUILD_DIR : /network-scratch/imilankovic/maxdc_builds/
+Sat 19:29: MAX_BUILDPARAMS : DFEModel='VECTIS' target='DFE' maxFileName='NCChiSquare'  
+Sat 19:29: Building output:
+Sat 19:29: MaxCompiler version: 2014.2
+Sat 19:29: Build "NCChiSquare" start time: Sat May 16 19:29:38 BST 2015
+Sat 19:29: Main build process running as user imilankovic on host nxws17.office.maxeler.com
+Sat 19:29: Build location: /home/imilankovic/builds/16-05-15/NCChiSquare_VECTIS_DFE_100MHz_160N_1431800978625
+Sat 19:29: Detailed build log available in "_build.log"
+Sat 19:29: 
+Sat 19:29: ENGINE BUILD PARAMETERS
+Sat 19:29: 	        Build name: NCChiSquare_VECTIS_DFE_100MHz_160N_1431800978625
+Sat 19:29: 	          DFEModel: VECTIS                                          
+Sat 19:29: 	       maxFileName: NCChiSquare                                     
+Sat 19:29: 	            target: DFE                                             
+Sat 19:29: 	        enableMPCX: false                                           
+Sat 19:29: 	       MPPRStartCT: 1                                               
+Sat 19:29: 	         MPPREndCT: 8                                               
+Sat 19:29: 	       MPPRThreads: 4                                               
+Sat 19:29: 	MPPRRetryThreshold: 500                                             
+Sat 19:29: 	               tag:                                                 
+Sat 19:29: 	     CEReplication: 6                                               
+Sat 19:29: 	         isBuffGce: true                                            
+Sat 19:29: 	 isMultiCycleReset: true                                            
+Sat 19:29: 	     isPhaseClocks: false                                           
+Sat 19:29: 	   streamFrequency: 100                                             
+Sat 19:29: 	      memFrequency: -1                                              
+Sat 19:29: 	         dspFactor: 0.5                                             
+Sat 19:29: 	   hasStreamStatus: false                                           
+Sat 19:29: 	     maximumDegree: 160                                             
+Sat 19:29: 	         valueType: dfeFloat(11, 53)                                
+Sat 19:29: Instantiating kernel "NonCentralChiSquareKernel"
+Sat 19:29: -------- Creating mapped rom 'CentralChiSquareGaussianMT_seeds0' --------
+Sat 19:29: WARNING: Note although mapped rom 'CentralChiSquareGaussianMT_seeds0' uses pre-initialized data, best practice is to always re-initialize at CPU code start-up.
+Sat 19:29: WARNING: Detected offset on DFEVector. If you are replacing a DFEArray with DFEVector you
+Sat 19:29: WARNING: can ignore this message. If you were already using DFEVector (formerly KMultiPipe)
+Sat 19:29: WARNING: you need to use stream.offsetStriped() to retain previous behaviour.
+Sat 19:29: WARNING: These warnings can be suppressed for your kernel using
+Sat 19:29: WARNING: stream.suppressOffsetVectorWarnings().
+Sat 19:29: WARNING: com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Stream.offset(Stream.java:241)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.build(MersenneTwister.maxj:256)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.build(MersenneTwister.maxj:191)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.<init>(MersenneTwister.maxj:87)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.GaussianRng.<init>(GaussianRng.maxj:34)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.GaussianRng.<init>(GaussianRng.maxj:24)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.CentralChiSquare.build(CentralChiSquare.maxj:41)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.CentralChiSquare.<init>(CentralChiSquare.maxj:25)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.lib.NonCentralChiSquare.<init>(NonCentralChiSquare.maxj:21)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareKernel.<init>(NonCentralChiSquareKernel.maxj:22)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareManager.setDesign(NonCentralChiSquareManager.maxj:121)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareManager.<init>(NonCentralChiSquareManager.maxj:39)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareBuilder.main(NonCentralChiSquareBuilder.maxj:26)
+Sat 19:29: WARNING: Detected offset on DFEVector. If you are replacing a DFEArray with DFEVector you
+Sat 19:29: WARNING: can ignore this message. If you were already using DFEVector (formerly KMultiPipe)
+Sat 19:29: WARNING: you need to use stream.offsetStriped() to retain previous behaviour.
+Sat 19:29: WARNING: These warnings can be suppressed for your kernel using
+Sat 19:29: WARNING: stream.suppressOffsetVectorWarnings().
+Sat 19:29: WARNING: com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Stream.offset(Stream.java:241)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.build(MersenneTwister.maxj:279)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.build(MersenneTwister.maxj:191)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.<init>(MersenneTwister.maxj:87)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.GaussianRng.<init>(GaussianRng.maxj:34)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.GaussianRng.<init>(GaussianRng.maxj:24)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.CentralChiSquare.build(CentralChiSquare.maxj:41)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.CentralChiSquare.<init>(CentralChiSquare.maxj:25)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.lib.NonCentralChiSquare.<init>(NonCentralChiSquare.maxj:21)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareKernel.<init>(NonCentralChiSquareKernel.maxj:22)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareManager.setDesign(NonCentralChiSquareManager.maxj:121)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareManager.<init>(NonCentralChiSquareManager.maxj:39)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareBuilder.main(NonCentralChiSquareBuilder.maxj:26)
+Sat 19:29: WARNING: Detected offset on DFEVector. If you are replacing a DFEArray with DFEVector you
+Sat 19:29: WARNING: can ignore this message. If you were already using DFEVector (formerly KMultiPipe)
+Sat 19:29: WARNING: you need to use stream.offsetStriped() to retain previous behaviour.
+Sat 19:29: WARNING: These warnings can be suppressed for your kernel using
+Sat 19:29: WARNING: stream.suppressOffsetVectorWarnings().
+Sat 19:29: WARNING: com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Stream.offset(Stream.java:241)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.build(MersenneTwister.maxj:280)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.build(MersenneTwister.maxj:191)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.<init>(MersenneTwister.maxj:87)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.GaussianRng.<init>(GaussianRng.maxj:34)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.GaussianRng.<init>(GaussianRng.maxj:24)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.CentralChiSquare.build(CentralChiSquare.maxj:41)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.CentralChiSquare.<init>(CentralChiSquare.maxj:25)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.lib.NonCentralChiSquare.<init>(NonCentralChiSquare.maxj:21)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareKernel.<init>(NonCentralChiSquareKernel.maxj:22)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareManager.setDesign(NonCentralChiSquareManager.maxj:121)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareManager.<init>(NonCentralChiSquareManager.maxj:39)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareBuilder.main(NonCentralChiSquareBuilder.maxj:26)
+Sat 19:29: WARNING: Floating-point casts ignore set rounding mode and use TONEAREVEN rounding only.
+Sat 19:29: frac2 has type dfeRawBits(37)
+Sat 19:29: -------- Creating mapped rom 'CentralChiSquareMT0_seeds0' --------
+Sat 19:29: WARNING: Note although mapped rom 'CentralChiSquareMT0_seeds0' uses pre-initialized data, best practice is to always re-initialize at CPU code start-up.
+Sat 19:29: WARNING: Detected offset on DFEVector. If you are replacing a DFEArray with DFEVector you
+Sat 19:29: WARNING: can ignore this message. If you were already using DFEVector (formerly KMultiPipe)
+Sat 19:29: WARNING: you need to use stream.offsetStriped() to retain previous behaviour.
+Sat 19:29: WARNING: These warnings can be suppressed for your kernel using
+Sat 19:29: WARNING: stream.suppressOffsetVectorWarnings().
+Sat 19:29: WARNING: com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Stream.offset(Stream.java:241)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.build(MersenneTwister.maxj:256)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.build(MersenneTwister.maxj:191)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.MersenneTwister.<init>(MersenneTwister.maxj:82)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.CentralChiSquare.build(CentralChiSquare.maxj:48)
+Sat 19:29: WARNING: com.maxeler.maxjlibs.rng.CentralChiSquare.<init>(CentralChiSquare.maxj:25)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.lib.NonCentralChiSquare.<init>(NonCentralChiSquare.maxj:21)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareKernel.<init>(NonCentralChiSquareKernel.maxj:22)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareManager.setDesign(NonCentralChiSquareManager.maxj:121)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareManager.<init>(NonCentralChiSquareManager.maxj:39)
+Sat 19:29: WARNING: com.maxeler.applibrary.noncentralchisquare.NonCentralChiSquareBuilder.main(NonCentralChiSquareBuilder.maxj:26)
+Sat 19:29: Engine build terminated by user.
+Sat 19:29: Engine build terminated by user
+Sat 19:29: Build failed: Sat May 16 19:29:44 BST 2015
+
+

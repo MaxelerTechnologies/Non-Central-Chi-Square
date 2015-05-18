@@ -1,0 +1,131 @@
+package com.maxeler.applibrary.noncentralchisquare;
+
+import java.util.Collection;
+
+import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
+import com.maxeler.maxcompiler.v2.kernelcompiler.KernelConfiguration;
+import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler._KernelConfiguration;
+import com.maxeler.maxcompiler.v2.managers.custom.CustomManager;
+import com.maxeler.maxcompiler.v2.managers.custom.blocks.KernelBlock;
+import com.maxeler.maxcompiler.v2.managers.custom.stdlib.DebugLevel;
+import com.maxeler.maxcompiler.v2.managers.custom.stdlib.MemoryControllerConfig;
+import com.maxeler.maxcompiler.v2.managers.engine_interfaces.CPUTypes;
+import com.maxeler.maxcompiler.v2.managers.engine_interfaces.EngineInterface;
+import com.maxeler.maxcompiler.v2.managers.engine_interfaces.EngineInterface.Direction;
+import com.maxeler.maxcompiler.v2.managers.engine_interfaces.InterfaceParam;
+import com.maxeler.maxjlibs.rng.MersenneTwister;
+
+public final class NonCentralChiSquareManager extends CustomManager {
+
+	private final NonCentralChiSquareEngineParameters m_params;
+	private KernelConfiguration m_kernelConfig;
+	private final String m_kernelBlockName;
+
+
+	/**
+	 * Constructor
+	 * @param params Application parameters
+	 * @param kernelBlockName Name of kernel block within the manager
+	 */
+	public NonCentralChiSquareManager(NonCentralChiSquareEngineParameters params,
+			String kernelBlockName) {
+		super(params);
+
+		m_params = params;
+		m_kernelBlockName = kernelBlockName;
+
+		setConfiguration();
+		setDesign();
+		addModes();
+
+		params.writeConstants(this);
+	}
+
+
+	/**
+	 * Set the manager and kernel configuration
+	 */
+	private void setConfiguration() {
+		MemoryControllerConfig memConfig = new MemoryControllerConfig();
+		config.setMemoryControllerConfig(memConfig);
+
+		config.setDefaultStreamClockFrequency(m_params.getStreamFrequency());
+		if(m_params.getMemFrequency() > 0) config.setOnCardMemoryFrequency(m_params.getMemFrequency());
+		DebugLevel debugLevel = new DebugLevel();
+		debugLevel.setHasStreamStatus(m_params.getHasStreamStatus());
+		debug.setDebugLevel(debugLevel);
+
+		m_kernelConfig = getCurrentKernelConfig();
+		m_kernelConfig.optimization.setCEReplicationNumPartitions(m_params.getCEReplication());
+		m_kernelConfig.optimization.setUseGlobalClockBuffer(m_params.getIsBuffGce());
+		_KernelConfiguration.getPhotonKernelConfig(getCurrentKernelConfig()).optimizations().setMultiCycleResetEnabled(m_params.getIsMultiCycleReset());
+		_KernelConfiguration.getPhotonKernelConfig(getCurrentKernelConfig()).setClockPhasePartitioningEnabled(m_params.getIsPhaseClocks());
+	}
+
+	/**
+	 * Create the default engine mode
+	 * Must be called AFTER setDesign, as it makes use of data generated during
+	 * kernel class instantiation.
+	 * @return The default engine mode
+	 */
+	private EngineInterface createDefaultMode() {
+		EngineInterface mode = new EngineInterface("default");
+
+		final InterfaceParam degree = mode.addParam("degree", CPUTypes.UINT8,
+				"Degree of the non-central chi square distribution");
+		mode.setScalar(m_kernelBlockName, "degree", degree);
+
+		final InterfaceParam sqrtLambda = mode.addParam("sqrtLambda",
+				CPUTypes.DOUBLE,
+				"Square root of the lambda de-centralizing constant");
+		mode.setScalar(m_kernelBlockName, "sqrtLambda", sqrtLambda);
+
+		final InterfaceParam sampleCount = mode.addParam("outputCount",
+				CPUTypes.UINT64,
+				"Number of pseudorandom values to be generated");
+		mode.setTicks(m_kernelBlockName, sampleCount);
+
+		mode.setStream("randomValues", CPUTypes.DOUBLE,
+				(sampleCount*m_params.getValueType().getTotalBits())/8);
+
+		Collection<MersenneTwister> mts = MersenneTwister.getNamedInstances();
+		for(MersenneTwister mt : mts) {
+			for(String n : mt.getSeedsMappedRomNames()) {
+				mode.ignoreMem(m_kernelBlockName, n, Direction.IN_OUT);
+//				mode.ignoreMemInput(m_kernelBlockName, n);
+			}
+		}
+
+		return mode;
+	}
+
+
+	/**
+	 * Add engine modes to the manager
+	 */
+	private void addModes() {
+		createSLiCinterface(createDefaultMode());
+	}
+
+
+	/**
+	 * Set the manager design.
+	 * <p>
+	 * Instantiate kernel block and connect it to input and output streams
+	 */
+	private void setDesign() {
+		// add kernel
+		KernelParameters kernelParams = makeKernelParameters(
+				m_kernelBlockName, m_kernelConfig);
+		Kernel k = new NonCentralChiSquareKernel(kernelParams, m_params);
+
+		KernelBlock block = addKernel(k);
+
+		// wire up inputs/outputs (all PCIe)
+		for (String inputName: block.getAllInputs())
+			block.getInput(inputName).connect(addStreamFromCPU(inputName));
+		for (String outputName: block.getAllOutputs())
+			addStreamToCPU(outputName).connect(block.getOutput(outputName));
+	}
+}
